@@ -1,0 +1,77 @@
+---
+title: "Parcial 1"
+author: "Lissette Quebrada, Brayan Granada"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+1. La tabla mostrada contiene valores de población, en cientos de miles, de las diez ciudades más pobladas de cuatro países en el año 1967:
+
+```{r, echo=FALSE}
+
+poblacion = c(29.66, 7.61, 6.35, 4.10, 3.8, 2.75, 2.70, 2.69, 2.51, 2.44, 77.81, 35.50, 24.79, 20.02, 16.70, 9.39, 9.38, 8.76, 7.63, 7.5, 8.68, 7.31, 6.02, 2.64, 1.75, 1.72, 1.51, 1.42, 1.31, 1.2, 110.21, 32.14, 18.88, 16.38, 13.37, 11.92, 10.71, 7.8, 7.7, 7)
+paises = c('argentina','argentina','argentina','argentina','argentina','argentina','argentina','argentina','argentina','argentina','usa','usa','usa','usa','usa','usa','usa','usa','usa','usa','holanda','holanda','holanda','holanda','holanda','holanda','holanda','holanda','holanda','holanda','japon','japon','japon','japon','japon','japon','japon','japon','japon','japon')
+
+
+bp = boxplot(poblacion~paises, main='Poblacion por cada pais del año 1997', pch = 19, col=c(123,234,445,456))
+xi <-  seq(bp$n)
+'Media por pais'
+media = tapply(poblacion, paises, mean);media
+'Desviacion Estandar por pais'
+desviacionEstandar = tapply(poblacion, paises, sd); desviacionEstandar
+points(xi, media, col = 'yellow', pch=19);
+arrows(xi, media-desviacionEstandar, xi, media+desviacionEstandar,code =3, col='blue', angle = 75, length = .2)
+
+```
+ 
+ 
+ a) Construya un box-plot e identifique los puntos extremos. ¿Cuáles son las características más sobresalientes? ¿Hay outliers?
+  
+    Rta/ Se encuentran outliers en Argentina, Japon, Usa y en Holanda no se encuentra ninguno, como se muestra, en Holanda se presentan los datos mas agrupados entre el Q1 y el Q3, lo que representa un         50% de poblacion habitando promediadamente las ciudades. En Japon se obtiene el dato mas atipico de los paises; en Japon y USA se obtiene una media poblacional alta, lo que equivale a una gran         concentracion en promedio en sus ciudades, a diferencia de Argentina y Holanda, en las cuales su media poblacional es baja.
+  
+  
+  b) Compare los centros de cada población, sus dispersiones y su simetría. ¿Cuál es el país más homogéneamente habitado? ¿Cuáles son las características más sobresalientes? ¿Hay outliers?
+  
+    Rta/ Holanda es el pais con los datos más agrupados y el cual tiene una simetria positiva, al igual que USA, en Argentina se encuentra una simetria negativa, pues la parte superior de la caja es la         que posee una mayor concentracion. Y en Japon, se encuentra una distribucion simetrica el cual se convierte en el pais mas homogeneamente habitado.
+
+
+2. Avianca se encuentra estudiando la situación de venta de puesto en el vuelo Armenia – Bogotá puesto que ha identificado que el 2% de las personas que reservaron puesto, no se presentan a la hora del embarque. Teniendo en cuenta que el avión A320 utilizado en esta ruta tiene una capacidad para 180 pasajeros, la empresa decide vender 181 tiquetes. ¿Cuál es la probabilidad de que todas las personas que llegan a embarque puedan tener su silla asegurada y no se presenten quejas por “sobre-vender” sillas ante la aeronáutica civil? Asuma que las llegadas de los pasajeros siguen una distribución Poisson.
+
+```{r, echo=FALSE}
+#x = numero de pasajeros / vuelo
+
+#p(x<=180) -> p(x=181)
+
+#2% no se presenta -> 3.6 personas (promedio de personas que no se presenta al vuelvo)
+#98% se presenta -> 176.4 personas
+
+probabilidadSi <- dpois(181, 176.4)
+probabilidadNo <- 1 - probabilidadSi
+
+print(paste("La probabilidad de que no se presente quejas por sobre-vender sillas en el avion es de: " , probabilidadNo))
+
+```
+
+3. En la planta envasadora de Coca-Cola FEMSA ubicada en Tocancipá se realiza el embotellado de la CocaCola presentación de 400 mL (en promedio), con una desviación estándar de 5 mL (mililitros). Si se sabe por experiencia que este proceso de embotellado sigue una distribución normal, y también se sabe que todo producto con más de 415 mL es declarado como NO CONFORME. Determine el porcentaje de las botellas de gaseosa que son declaradas producto NO CONFORME.
+
+
+```{r, echo=FALSE}
+
+# x = numero de botellas con mas de 415 ml 
+
+# promedio = 400 ml
+# desviacion estándar = 5 ml
+
+# p(x>= 415) = p(x>415)
+
+probabilidad = pnorm(415,400,5,FALSE)
+
+print(paste("El porcentaje de botellas de gaseosa que son declaradas como producto NO CONFORME es: ", probabilidad*100,'%'))
+```
+
+
+
+
+
+
+
